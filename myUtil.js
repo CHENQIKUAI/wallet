@@ -7,6 +7,9 @@ const ENDPOINTS = "https://ropsten.infura.io/v3/b186ce03905e4f759fb7243fac5fc0df
 var web3 = new Web3(Web3.givenProvider || ENDPOINTS);
 
 module.exports = {
+    getWeb3() {
+        return web3;
+    },
     async createHDWalletByMnemonic(mnemonic) {
         const seed = await bip39.mnemonicToSeed(mnemonic)
         const hdWallet = hdkey.fromMasterSeed(seed)
@@ -63,9 +66,7 @@ module.exports = {
         }).then(function (data) {
             console.log(data)
             if (data) {
-                responseData = success({
-                    "transactionHash": data.transactionHash
-                })
+                responseData = data
             } else {
                 responseData = ("交易失败")
             }
